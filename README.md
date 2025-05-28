@@ -17,17 +17,51 @@ This project provides a simple Python interface for sending WhatsApp messages us
 pip install -r requirements.txt
 ```
 
+## Environment Variables
+
+This project uses environment variables to securely store API credentials. Follow these steps to set up your environment:
+
+1. Create a `.env` file in the root directory of the project by copying the provided example:
+
+```bash
+cp .env_example .env
+```
+
+2. Open the `.env` file and replace the placeholder values with your actual credentials:
+
+```
+# Fonnte WhatsApp API Configuration
+FONNTE_API_KEY=your_actual_api_key_here
+FONNTE_BASE_URL=https://api.fonnte.com/send
+
+# Test configuration (optional)
+TEST_RECIPIENT=6281234567890
+```
+
+### Available Environment Variables
+
+| Variable | Required | Description |
+|----------|----------|-------------|
+| `FONNTE_API_KEY` | Yes | Your API key from the Fonnte dashboard |
+| `FONNTE_BASE_URL` | Yes | The Fonnte API endpoint URL |
+| `TEST_RECIPIENT` | No | A test phone number for development purposes |
+
 ## Usage
 
 ### Basic Configuration
 
-Before using the API, you need to get your API key from the [Fonnte dashboard](https://fonnte.com).
+Before using the API, you need to get your API key from the [Fonnte dashboard](https://fonnte.com) and set it in your `.env` file.
 
 ```python
 from send_whatsapp import FonnteWhatsApp
+import os
+from dotenv import load_dotenv
 
-# Initialize with your API key
-API_KEY = "YOUR_FONNTE_API_KEY"
+# Load environment variables from .env file
+load_dotenv()
+
+# Initialize with your API key from environment variables
+API_KEY = os.getenv("FONNTE_API_KEY")
 fonnte = FonnteWhatsApp(API_KEY)
 ```
 
